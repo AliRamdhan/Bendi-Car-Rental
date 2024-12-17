@@ -1,0 +1,67 @@
+/* Add this to your stylesheet or in a <style> block */
+
+/* DataTable Styling */
+/* #dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+} */
+
+/* Add margin between the search input and the page length dropdown */
+div.dataTables_wrapper div.dataTables_length,
+div.dataTables_wrapper div.dataTables_filter {
+  display: inline-block;
+  margin-bottom: 20px; /* Adjust the margin as needed */
+}
+
+/* Ensure proper spacing between elements */
+div.dataTables_wrapper {
+  margin-top: 20px;
+}
+
+/* Table header styling */
+/* #dataTable thead {
+  background-color: #f3f4f6; 
+  text-align: left;
+  margin-top: 50px;
+} */
+
+/* #dataTable th {
+  padding: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #4b5563;
+} */
+
+/* Table cell styling */
+/* #dataTable td {
+  padding: 12px;
+  font-size: 14px;
+  color: #6b7280;
+} */
+
+/* Zebra striping for rows */
+/* #dataTable tbody tr:nth-child(odd) {
+  background-color: #f9fafb;
+}
+
+#dataTable tbody tr:nth-child(even) {
+  background-color: #ffffff;
+} */
+
+/* Hover effect */
+/* #dataTable tbody tr:hover {
+  background-color: #e5e7eb; 
+  cursor: pointer;
+} */
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #dataTable thead {
+    font-size: 12px;
+  }
+  #dataTable td {
+    font-size: 12px;
+    padding: 8px;
+  }
+}

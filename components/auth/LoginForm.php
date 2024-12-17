@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             style="background-image: url(./assets/home.png)">
             <div class="flex items-center h-full px-20 bg-gray-800 bg-opacity-40">
                 <div>
-                    <h2 class="text-xl font-bold text-white sm:text-6xl">Bendi Rental Car</h2>
+                    <h2 class="text-xl font-bold text-white sm:text-6xl">Bendi Car Rental</h2>
                     <p class="max-w-xl mt-3 text-2xl text-gray-100">
                         Rental aman dan terpercaya
                     </p>

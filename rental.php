@@ -1,10 +1,10 @@
 <?php
-$title = 'Form Peminjaman'; 
-ob_start(); 
+$title = 'Form Penyewaan';
+ob_start();
 
 
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();  
+    session_start();
 }
 
 if (!isset($_SESSION['user'])) {
@@ -19,14 +19,12 @@ require_once 'api/Car.php';
 $database = new Database();
 $rent = new Rent($database);
 $car = new Car($database);
-
-// Get car list for dropdown
 $cars = $car->getAllCars();
 
 $total_payment = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
+
     $fullname = $_POST['fullname'] ?? '';
     $kartu_type = $_POST['kartu_type'] ?? '';
     $identity_number = $_POST['identity_number'] ?? '';
@@ -37,42 +35,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $end_date = $_POST['end_date'] ?? '';
     $use_driver = isset($_POST['use_driver']) ? 1 : 0;
     $created_by = $_SESSION['user']['id'] ?? null;
-    
+
     if (empty($fullname) || empty($kartu_type) || empty($identity_number) || empty($car_id) || empty($start_date) || empty($end_date)) {
         $errorMessage = "All fields are required.";
-    } else {
-        // Calculate total payment
+    } else {;
         $query = "SELECT price, driver_price FROM cars WHERE id = :car_id LIMIT 1";
         $stmt = $database->getConnection()->prepare($query);
         $stmt->bindParam(':car_id', $car_id, PDO::PARAM_INT);
         $stmt->execute();
-        
+
         $carData = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+
         if ($carData) {
             $car_price = $carData['price'];
-            $driver_price = $carData['driver_price'];
-            
-            // Calculate the difference in days
+            $driver_price = $carData['driver_price'];;
             $start_date_obj = new DateTime($start_date);
             $end_date_obj = new DateTime($end_date);
             $interval = $start_date_obj->diff($end_date_obj);
-            $days = $interval->days;
-            
-            // Calculate the total payment
+            $days = $interval->days;;
             $total_payment = $car_price * $days;
-            
+
             if ($use_driver) {
                 $total_payment += $driver_price * $days;
-            }
-
-            // Create rental and customer records
-            $result = $rent->createRental($fullname, $kartu_type, $identity_number,$address, $phone_number, $car_id, $start_date, $end_date, $use_driver, $created_by, $total_payment);
+            };
+            $result = $rent->createRental($fullname, $kartu_type, $identity_number, $address, $phone_number, $car_id, $start_date, $end_date, $use_driver, $created_by, $total_payment);
             if ($result === true) {
-                header("Location: rental.php");  
-                exit;  
+                header("Location: rental.php");
+                exit;
             } else {
-                $errorMessage = $result; 
+                $errorMessage = $result;
             }
         } else {
             $errorMessage = "Car not found.";
@@ -87,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div>
             <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Data Rental</h1>
             <p class="mt-1.5 text-sm text-gray-500">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure, recusandae.
+                Data rental memuat informasi terkait penyewaan barang atau jasa yang diberikan.
             </p>
         </div>
     </div>
@@ -128,10 +119,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     class="border border-gray-800 text-gray-900 text-sm rounded-lg block w-full p-2">
                     <option selected>Choose a car</option>
                     <?php foreach ($cars as $car) : ?>
-                    <option value="<?= $car['id']; ?>" data-price="<?= $car['price']; ?>"
-                        data-driver-price="<?= $car['driver_price']; ?>">
-                        <?= $car['name']; ?>
-                    </option>
+                        <option value="<?= $car['id']; ?>" data-price="<?= $car['price']; ?>"
+                            data-driver-price="<?= $car['driver_price']; ?>">
+                            <?= $car['name']; ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
 
@@ -151,15 +142,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="mb-2">
                 <div class="flex items-center">
                     <input id="use_driver" name="use_driver" type="checkbox"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" />
+                        class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500" />
                     <label for="use_driver" class="ms-2 text-base font-medium text-gray-900">Gunakan Supir</label>
                 </div>
             </div>
             <!-- Display Error Message -->
             <?php if (isset($errorMessage)): ?>
-            <div class="mt-4 text-red-500">
-                <?php echo $errorMessage; ?>
-            </div>
+                <div class="mt-4 text-red-500">
+                    <?php echo $errorMessage; ?>
+                </div>
             <?php endif; ?>
 
             <div class="mb-2">
@@ -170,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="mt-6">
                 <button type="button" onclick="confirmData()"
-                    class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400">
+                    class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400">
                     Submit
                 </button>
             </div>
@@ -182,21 +173,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     function confirmData() {
         const confirmation = confirm("Are you sure you want to create the data?");
         if (confirmation) {
-            // Submit the form
+            ;
             document.getElementById("rental-form").submit();
         }
     }
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const carDropdown = document.getElementById("car_id");
         const startDateInput = document.getElementById("start_date");
         const endDateInput = document.getElementById("end_date");
         const useDriverCheckbox = document.getElementById("use_driver");
-        const totalPaymentField = document.getElementById("total_payment");
+        const totalPaymentField = document.getElementById("total_payment");;
 
-        // Fungsi untuk menghitung total payment
         function calculateTotalPayment() {
             const selectedCar = carDropdown.options[carDropdown.selectedIndex];
             const carPrice = parseFloat(selectedCar.getAttribute("data-price")) || 0;
@@ -205,31 +195,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             const startDate = new Date(startDateInput.value);
             const endDate = new Date(endDateInput.value);
 
-            // Pastikan tanggal valid
+            ;
             if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || startDate > endDate) {
                 totalPaymentField.value = `Rp. ${carPrice}`;
                 return;
             }
 
-            // Hitung total hari sewa
+            ;
             const timeDiff = endDate - startDate;
-            const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Konversi ke hari
+            const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
-            // Hitung total biaya
+            ;
             let totalPayment = carPrice * days;
 
             if (useDriverCheckbox.checked) {
                 totalPayment += driverPrice * days;
             }
 
-            // Tampilkan hasil ke input
+            ;
             totalPaymentField.value = totalPayment.toLocaleString("id-ID", {
                 style: "currency",
                 currency: "IDR"
             });
-        }
-
-        // Event listeners untuk memantau perubahan
+        };
         carDropdown.addEventListener("change", calculateTotalPayment);
         startDateInput.addEventListener("change", calculateTotalPayment);
         endDateInput.addEventListener("change", calculateTotalPayment);

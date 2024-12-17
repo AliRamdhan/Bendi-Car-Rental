@@ -1,12 +1,12 @@
-<?php 
-$title = 'Laporan Rental'; 
-ob_start(); 
+<?php
+$title = 'Laporan Rental';
+ob_start();
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['user'])) {
-    header("Location: index.php"); 
+    header("Location: index.php");
     exit;
 }
 
@@ -18,7 +18,7 @@ require_once 'api/Customer.php';
 $database = new Database();
 $returnObj = new Returns($database);
 $rentaldata = new Rent($database);
-$rentalDataList = $rentaldata->getAllDataReport(); 
+$rentalDataList = $rentaldata->getAllDataReport();
 ?>
 
 <!-- header -->
@@ -29,7 +29,7 @@ $rentalDataList = $rentaldata->getAllDataReport();
                 <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Data Laporan</h1>
 
                 <p class="mt-1.5 text-sm text-gray-500">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure, recusandae.
+                    Data report adalah laporan keseluruhan yang menyajikan analisis atau ringkasan aktivitas terkait rental dan pengembalian.
                 </p>
             </div>
         </div>
@@ -81,7 +81,7 @@ $rentalDataList = $rentaldata->getAllDataReport();
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#dataTable').DataTable({
             responsive: true,
             pageLength: 10,

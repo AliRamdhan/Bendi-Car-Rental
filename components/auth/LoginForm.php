@@ -6,7 +6,7 @@ require_once 'db/connect.php';
 require_once 'api/User.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $loginIdentifier = $_POST['email']; 
+    $loginIdentifier = $_POST['email'];
     $password = $_POST['password'];
 
     try {
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Sesi gagal disimpan.";
         }
 
-        header("Location: dashboard.php"); 
+        header("Location: dashboard.php");
         exit;
     } catch (Exception $e) {
         $errorMessage = $e->getMessage();
@@ -39,13 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="bg-white">
     <div class="flex justify-center h-screen">
         <div class="hidden bg-cover lg:block lg:w-2/3"
-            style="background-image: url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)">
-            <div class="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
+            style="background-image: url(./assets/home.png)">
+            <div class="flex items-center h-full px-20 bg-gray-800 bg-opacity-40">
                 <div>
-                    <h2 class="text-2xl font-bold text-white sm:text-3xl">Meraki UI</h2>
-                    <p class="max-w-xl mt-3 text-gray-300">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. In autem ipsa, nulla laboriosam
-                        dolores, repellendus perferendis libero suscipit nam temporibus molestiae
+                    <h2 class="text-xl font-bold text-white sm:text-6xl">Bendi Rental Car</h2>
+                    <p class="max-w-xl mt-3 text-2xl text-gray-100">
+                        Rental aman dan terpercaya
                     </p>
                 </div>
             </div>
@@ -55,7 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="flex-1">
                 <div class="text-center">
                     <div class="flex justify-center mx-auto">
-                        <img class="w-auto h-7 sm:h-8" src="https://merakiui.com/images/logo.svg" alt="">
+                        <!-- <img class="w-auto h-7 sm:h-8" src="https://merakiui.com/images/logo.svg" alt=""> -->
+                        <div class="w-16 h-16 flex justify-center items-center border border-green-800 rounded-full">
+                            <p class="text-green-800 font-black text-2xl">BEN</p>
+                        </div>
                     </div>
 
                     <p class="mt-3 text-gray-500">Sign in to access your account</p>
@@ -88,15 +90,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <!-- Display Error Message -->
                         <?php if (isset($errorMessage)): ?>
-                        <div class="mt-4 text-red-500">
-                            <?php echo $errorMessage; ?>
-                        </div>
+                            <div class="mt-4 text-red-500">
+                                <?php echo $errorMessage; ?>
+                            </div>
                         <?php endif; ?>
 
                         <!-- Sign In Button -->
                         <div class="mt-6">
                             <button type="submit"
-                                class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                                 Sign in
                             </button>
                         </div>
@@ -104,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </form>
 
                     <p class="mt-6 text-sm text-center text-gray-400">Don&#x27;t have an account yet? <a href="#"
-                            class="text-blue-500 focus:outline-none focus:underline hover:underline">Sign up</a>.</p>
+                            class="text-green-500 focus:outline-none focus:underline hover:underline">Sign up</a>.</p>
                 </div>
             </div>
         </div>

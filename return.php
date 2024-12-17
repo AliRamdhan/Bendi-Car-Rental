@@ -1,12 +1,12 @@
-<?php 
-$title = 'Form Pengembalian'; 
-ob_start(); 
+<?php
+$title = 'Form Pengembalian';
+ob_start();
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['user'])) {
-    header("Location: index.php"); 
+    header("Location: index.php");
     exit;
 }
 
@@ -18,20 +18,20 @@ require_once 'api/Customer.php';
 $database = new Database();
 $returnObj = new Returns($database);
 $rentaldata = new Rent($database);
-$rentalDataList = $rentaldata->getAllData(); 
+$rentalDataList = $rentaldata->getAllData();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $rentalId = $_POST['rental_id']; 
+    $rentalId = $_POST['rental_id'];
     $return_date = $_POST['return_date'];
     $late_days = $_POST['late_days'];
-    $isDamage = isset($_POST['isDamage']) ? 1 : 0; 
+    $isDamage = isset($_POST['isDamage']) ? 1 : 0;
     $damage_description = $isDamage ? $_POST['description_damage'] : null;
     $damage_fee = $isDamage ? $_POST['damage_fee'] : 0;
     $totalDamageFee = $_POST['total_damage_fee'];
 
     if ($returnObj->createReturn($rentalId, $return_date, $late_days, $isDamage, $damage_description, $damage_fee, $totalDamageFee)) {
         echo "Data successfully inserted!";
-        header("Location: return.php");  
+        header("Location: return.php");
         exit;
     } else {
         echo "Error inserting data!";
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div>
             <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Data Pengembalian</h1>
             <p class="mt-1.5 text-sm text-gray-500">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure, recusandae.
+                Data pengembalian mencatat informasi terkait proses pengembalian barang, kendaraan, atau item yang disewakan
             </p>
         </div>
     </div>
@@ -56,10 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     class="border border-gray-800 text-gray-900 text-sm rounded-lg block w-full p-2">
                     <option value="" selected>Choose a peminjam</option>
                     <?php
-        foreach ($rentalDataList as $rental) {
-            echo "<option value=\"{$rental['id']}\">{$rental['fullname']} ({$rental['phone_number']}) - {$rental['car_model']} [{$rental['car_license_plate']}]</option>";
-        }
-        ?>
+                    foreach ($rentalDataList as $rental) {
+                        echo "<option value=\"{$rental['id']}\">{$rental['fullname']} ({$rental['phone_number']}) - {$rental['car_model']} [{$rental['car_license_plate']}]</option>";
+                    }
+                    ?>
                 </select>
             </div>
             <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-x-8">
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mb-2">
                 <div class="flex items-center">
                     <input id="isDamage-checkbox" name="isDamage" type="checkbox" value="1"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                        class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500">
                     <label for="isDamage-checkbox" class="ms-2 text-base font-medium text-gray-900">Adanya
                         Kerusakan</label>
                 </div>
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="mt-6">
                 <button type="button" onclick="confirmData()"
-                    class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50">
                     Submit
                 </button>
             </div>
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     keterlambatanField.addEventListener('input', calculateTotalDamageFee);
     biayaKerusakanField.addEventListener('input', calculateTotalDamageFee);
-    kerusakanCheckbox.addEventListener('change', function () {
+    kerusakanCheckbox.addEventListener('change', function() {
         const kerusakanFields = document.getElementById('description_damage');
         const biayaKerusakanField = document.getElementById('damage_fee-field');
         kerusakanFields.style.display = this.checked ? 'block' : 'none';
